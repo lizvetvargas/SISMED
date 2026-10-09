@@ -1,36 +1,19 @@
-
+﻿# Base de datos local: no publicar información de pacientes
 database/*.db
 database/*.sqlite
 database/*.sqlite3
+
+# Python
 __pycache__/
 *.py[cod]
+
+# Entornos virtuales
 .venv/
 venv/
+
+# Variables de entorno y secretos
 .env
 .env.*
 
-
-database/*.db
-database/*.sqlite
-database/*.sqlite3
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-.env
-.env.*
-
-
-database/sismed.db
-
-
-.vscode/
-
-database/
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-.env
-.env.*
+# Configuración local del editor
 .vscode/
