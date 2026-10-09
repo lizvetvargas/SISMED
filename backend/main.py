@@ -19,7 +19,7 @@ from .models import (
     Cita,
     HistoriaClinica,
 )
-from .routes import pacientes
+from .routes import pacientes, medicos
 
 
 # =========================================================
@@ -48,7 +48,7 @@ if not SECRET_KEY:
 
 
 def crear_hash(password: str) -> str:
-    """Genera un hash seguro de la contraseña con PBKDF2."""
+    """Genera un hash de contraseña con PBKDF2."""
     salt = secrets.token_hex(16)
 
     resultado = hashlib.pbkdf2_hmac(
@@ -85,7 +85,7 @@ def verificar_password(password: str, almacenada: str) -> bool:
         except (ValueError, TypeError):
             return False
 
-    # Compatibilidad temporal con contraseñas anteriores.
+    # Compatibilidad con contraseñas anteriores.
     return hmac.compare_digest(password, almacenada)
 
 
@@ -120,8 +120,9 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 # 4. REGISTRO DE MÓDULOS
 # =========================================================
 
-# Activa las rutas del módulo de pacientes.
+# Se conectan los módulos de pacientes y médicos.
 app.include_router(pacientes.router)
+app.include_router(medicos.router)
 
 
 # =========================================================
