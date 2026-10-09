@@ -1,3 +1,4 @@
+```html
 {% extends "base.html" %}
 
 {% block titulo %}
@@ -9,9 +10,7 @@ Historia clínica
 {% if paciente %}
 
 <div class="page-header">
-
     <div>
-
         <span class="section-label">
             HISTORIA CLÍNICA
         </span>
@@ -24,11 +23,8 @@ Historia clínica
         <p>
             DNI: {{ paciente.dni }}
         </p>
-
     </div>
-
 </div>
-
 
 <form action="/historias/guardar"
       method="post"
@@ -38,49 +34,35 @@ Historia clínica
            name="paciente_id"
            value="{{ paciente.id }}">
 
-
     <div class="field full">
-
         <label>Antecedentes</label>
 
         <textarea name="antecedentes"
                   rows="5">{{ historia.antecedentes if historia else "" }}</textarea>
-
     </div>
 
-
     <div class="field full">
+        <label>Diagnóstico</label>
 
-        <label>Diagnósticos</label>
-
-        <textarea name="diagnosticos"
-                  rows="5">{{ historia.diagnosticos if historia else "" }}</textarea>
-
+        <textarea name="diagnostico"
+                  rows="5">{{ historia.diagnostico if historia else "" }}</textarea>
     </div>
 
-
     <div class="field full">
+        <label>Tratamiento</label>
 
-        <label>Tratamientos</label>
-
-        <textarea name="tratamientos"
-                  rows="5">{{ historia.tratamientos if historia else "" }}</textarea>
-
+        <textarea name="tratamiento"
+                  rows="5">{{ historia.tratamiento if historia else "" }}</textarea>
     </div>
 
-
     <div class="field full">
-
         <label>Observaciones</label>
 
         <textarea name="observaciones"
                   rows="5">{{ historia.observaciones if historia else "" }}</textarea>
-
     </div>
 
-
     <div class="form-actions">
-
         <a href="/historias"
            class="secondary-button">
             Cancelar
@@ -90,7 +72,6 @@ Historia clínica
                 class="primary-button">
             Guardar historia
         </button>
-
     </div>
 
 </form>
@@ -104,3 +85,4 @@ Historia clínica
 {% endif %}
 
 {% endblock %}
+```
