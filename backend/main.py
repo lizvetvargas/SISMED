@@ -19,7 +19,7 @@ from .models import (
     Cita,
     HistoriaClinica,
 )
-from .routes import pacientes, medicos, citas, historias
+from .routes import pacientes, medicos, citas, historias, enfermeria
 
 
 # =========================================================
@@ -124,6 +124,7 @@ app.include_router(pacientes.router)
 app.include_router(medicos.router)
 app.include_router(citas.router)
 app.include_router(historias.router)
+app.include_router(enfermeria.router)
 
 
 # =========================================================
@@ -314,4 +315,3 @@ def estado():
         "sistema": "SISMED",
         "estado": "funcionando",
     }
-
