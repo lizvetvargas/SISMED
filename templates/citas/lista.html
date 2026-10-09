@@ -1,3 +1,4 @@
+```html
 {% extends "base.html" %}
 
 {% block titulo %}
@@ -7,145 +8,116 @@ Citas
 {% block contenido %}
 
 <div class="page-header">
-
     <div>
         <span class="section-label">
             AGENDA MÉDICA
         </span>
 
-        <h2>
-            Citas
-        </h2>
+        <h2>Citas</h2>
 
         <p>
             Gestiona las citas programadas del consultorio.
         </p>
     </div>
 
-    <a href="/citas/registrar"
-       class="primary-button">
+    <a href="/citas/registrar" class="primary-button">
         + Nueva cita
     </a>
-
 </div>
 
-
 <div class="table-panel">
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Estado</th>
+                <th>Actualizar</th>
+            </tr>
+        </thead>
 
-<table>
+        <tbody>
+            {% for cita in citas %}
+            <tr>
+                <td>{{ cita.fecha }}</td>
 
-<thead>
+                <td>
+                    <strong>{{ cita.hora }}</strong>
+                </td>
 
-<tr>
-    <th>Fecha</th>
-    <th>Hora</th>
-    <th>Paciente</th>
-    <th>Médico</th>
-    <th>Estado</th>
-    <th>Actualizar</th>
-</tr>
+                <td>
+                    {% set paciente = pacientes.get(cita.paciente_id) %}
 
-</thead>
+                    {% if paciente %}
+                        {{ paciente.nombres }} {{ paciente.apellidos }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
 
-<tbody>
+                <td>
+                    {% set medico = medicos.get(cita.medico_id) %}
 
-{% for cita in citas %}
+                    {% if medico %}
+                        Dr(a). {{ medico.nombres }} {{ medico.apellidos }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
 
-<tr>
+                <td>
+                    <span class="status {{ cita.estado|lower }}">
+                        {{ cita.estado }}
+                    </span>
+                </td>
 
-<td>
-    {{ cita.fecha }}
-</td>
+                <td>
+                    <form
+                        action="/citas/{{ cita.id }}/estado"
+                        method="post"
+                        class="inline-form"
+                    >
+                        <select name="estado" aria-label="Estado de la cita">
+                            <option value="Pendiente"
+                                {% if cita.estado == "Pendiente" %}selected{% endif %}>
+                                Pendiente
+                            </option>
 
-<td>
-    <strong>{{ cita.hora }}</strong>
-</td>
+                            <option value="Confirmada"
+                                {% if cita.estado == "Confirmada" %}selected{% endif %}>
+                                Confirmada
+                            </option>
 
-<td>
+                            <option value="Atendida"
+                                {% if cita.estado == "Atendida" %}selected{% endif %}>
+                                Atendida
+                            </option>
 
-{% set paciente = pacientes.get(cita.paciente_id) %}
+                            <option value="Cancelada"
+                                {% if cita.estado == "Cancelada" %}selected{% endif %}>
+                                Cancelada
+                            </option>
+                        </select>
 
-{% if paciente %}
-    {{ paciente.nombres }} {{ paciente.apellidos }}
-{% else %}
-    —
-{% endif %}
+                        <button type="submit" class="small-button">
+                            Guardar
+                        </button>
+                    </form>
+                </td>
+            </tr>
 
-</td>
-
-<td>
-
-{% set medico = medicos.get(cita.medico_id) %}
-
-{% if medico %}
-    Dr(a). {{ medico.nombres }} {{ medico.apellidos }}
-{% else %}
-    —
-{% endif %}
-
-</td>
-
-<td>
-    <span class="status {{ cita.estado|lower }}">
-        {{ cita.estado }}
-    </span>
-</td>
-
-<td>
-
-<form action="/citas/{{ cita.id }}/estado"
-      method="post"
-      class="inline-form">
-
-<select name="estado">
-
-<option value="Pendiente"
-    {% if cita.estado == "Pendiente" %}selected{% endif %}>
-    Pendiente
-</option>
-
-<option value="Confirmada"
-    {% if cita.estado == "Confirmada" %}selected{% endif %}>
-    Confirmada
-</option>
-
-<option value="Atendida"
-    {% if cita.estado == "Atendida" %}selected{% endif %}>
-    Atendida
-</option>
-
-<option value="Cancelada"
-    {% if cita.estado == "Cancelada" %}selected{% endif %}>
-    Cancelada
-</option>
-
-</select>
-
-<button type="submit"
-        class="small-button">
-    Guardar
-</button>
-
-</form>
-
-</td>
-
-</tr>
-
-{% else %}
-
-<tr>
-    <td colspan="6" class="empty">
-        No hay citas registradas.
-    </td>
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
+            {% else %}
+            <tr>
+                <td colspan="6" class="empty">
+                    No hay citas registradas.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}
+```
