@@ -19,7 +19,7 @@ from .models import (
     Cita,
     HistoriaClinica,
 )
-from .routes import pacientes, medicos
+from .routes import pacientes, medicos, citas
 
 
 # =========================================================
@@ -120,9 +120,10 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 # 4. REGISTRO DE MÓDULOS
 # =========================================================
 
-# Se conectan los módulos de pacientes y médicos.
+# Se conectan los módulos existentes de SISMED.
 app.include_router(pacientes.router)
 app.include_router(medicos.router)
+app.include_router(citas.router)
 
 
 # =========================================================
