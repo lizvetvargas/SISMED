@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Perfil del paciente
+{% endblock %}
+
+{% block contenido %}
+
+{% if paciente %}
+
+<div class="profile-card">
+
+    <div class="profile-avatar">
+        {{ paciente.nombres[0] }}
+    </div>
+
+    <div>
+
+        <span class="section-label">
+            PACIENTE
+        </span>
+
+        <h2>
+            {{ paciente.nombres }}
+            {{ paciente.apellidos }}
+        </h2>
+
+        <p>
+            DNI: {{ paciente.dni }}
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="info-grid">
+
+    <div class="info-card">
+        <span>Teléfono</span>
+        <strong>{{ paciente.telefono or "No registrado" }}</strong>
+    </div>
+
+    <div class="info-card">
+        <span>Dirección</span>
+        <strong>{{ paciente.direccion or "No registrada" }}</strong>
+    </div>
+
+    <div class="info-card">
+        <span>Fecha de nacimiento</span>
+        <strong>{{ paciente.fecha_nacimiento or "No registrada" }}</strong>
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+            <span class="section-label">
+                HISTORIA
+            </span>
+
+            <h3>
+                Historia clínica
+            </h3>
+        </div>
+
+        <a href="/historias/{{ paciente.id }}"
+           class="primary-button">
+            Ver historia
+        </a>
+
+    </div>
+
+    {% if historia %}
+
+    <p>
+        Historia clínica registrada.
+    </p>
+
+    {% else %}
+
+    <p>
+        Este paciente todavía no tiene historia clínica.
+    </p>
+
+    {% endif %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+    Paciente no encontrado.
+</div>
+
+{% endif %}
+
+{% endblock %}

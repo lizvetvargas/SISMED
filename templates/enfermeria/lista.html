@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Enfermería
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">
+            ATENCIÓN
+        </span>
+
+        <h2>
+            Control de enfermería
+        </h2>
+
+        <p>
+            Consulta el estado de las atenciones programadas.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="table-panel">
+
+<table>
+
+<thead>
+
+<tr>
+    <th>Hora</th>
+    <th>Paciente</th>
+    <th>Médico</th>
+    <th>Estado</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for cita in citas %}
+
+<tr>
+
+<td>
+    <strong>{{ cita.hora }}</strong>
+</td>
+
+<td>
+
+{% set paciente = pacientes.get(cita.paciente_id) %}
+
+{% if paciente %}
+    {{ paciente.nombres }} {{ paciente.apellidos }}
+{% else %}
+    —
+{% endif %}
+
+</td>
+
+<td>
+
+{% set medico = medicos.get(cita.medico_id) %}
+
+{% if medico %}
+    {{ medico.nombres }} {{ medico.apellidos }}
+{% else %}
+    —
+{% endif %}
+
+</td>
+
+<td>
+
+<span class="status {{ cita.estado|lower }}">
+    {{ cita.estado }}
+</span>
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="4"
+    class="empty">
+
+    No existen atenciones registradas.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

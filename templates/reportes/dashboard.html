@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Reportes
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+
+        <span class="section-label">
+            ESTADÍSTICAS
+        </span>
+
+        <h2>
+            Reportes generales
+        </h2>
+
+        <p>
+            Resumen de la actividad del consultorio.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat-card blue">
+
+        <span class="stat-icon">
+            ♙
+        </span>
+
+        <div>
+
+            <span>
+                Pacientes
+            </span>
+
+            <strong>
+                {{ pacientes }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card pink">
+
+        <span class="stat-icon">
+            ✚
+        </span>
+
+        <div>
+
+            <span>
+                Médicos
+            </span>
+
+            <strong>
+                {{ medicos }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card gold">
+
+        <span class="stat-icon">
+            ▣
+        </span>
+
+        <div>
+
+            <span>
+                Citas
+            </span>
+
+            <strong>
+                {{ citas }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <span class="section-label">
+                ESTADO DE CITAS
+            </span>
+
+            <h3>
+                Resumen
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="report-list">
+
+        <div>
+            <span>Pendientes</span>
+            <strong>{{ pendientes }}</strong>
+        </div>
+
+        <div>
+            <span>Confirmadas</span>
+            <strong>{{ confirmadas }}</strong>
+        </div>
+
+        <div>
+            <span>Atendidas</span>
+            <strong>{{ atendidas }}</strong>
+        </div>
+
+        <div>
+            <span>Canceladas</span>
+            <strong>{{ canceladas }}</strong>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Pacientes
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">GESTIÓN</span>
+
+        <h2>
+            Pacientes registrados
+        </h2>
+
+        <p>
+            Consulta y administra la información de los pacientes.
+        </p>
+    </div>
+
+    <a href="/pacientes/registrar"
+       class="primary-button">
+        + Nuevo paciente
+    </a>
+
+</div>
+
+
+<div class="table-panel">
+
+    <div class="search-bar">
+
+        <span>⌕</span>
+
+        <input type="text"
+               placeholder="Buscar paciente por DNI o nombre">
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>DNI</th>
+            <th>Paciente</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Acción</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for paciente in pacientes %}
+
+        <tr>
+
+            <td>
+                <strong>{{ paciente.dni }}</strong>
+            </td>
+
+            <td>
+                {{ paciente.nombres }}
+                {{ paciente.apellidos }}
+            </td>
+
+            <td>
+                {{ paciente.telefono or "—" }}
+            </td>
+
+            <td>
+                {{ paciente.direccion or "—" }}
+            </td>
+
+            <td>
+                <a class="table-action"
+                   href="/pacientes/{{ paciente.id }}">
+                    Ver perfil
+                </a>
+            </td>
+
+        </tr>
+
+        {% else %}
+
+        <tr>
+            <td colspan="5" class="empty">
+                No hay pacientes registrados.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SISMED</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='css/variables.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='css/base.css') }}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">S</div>
+
+            <div>
+                <strong>SISMED</strong>
+                <span>Gestión Médica</span>
+            </div>
+        </div>
+
+        <nav class="menu">
+
+            <a href="/dashboard">
+                <span>⌂</span>
+                Inicio
+            </a>
+
+            <a href="/pacientes">
+                <span>♙</span>
+                Pacientes
+            </a>
+
+            <a href="/medicos">
+                <span>✚</span>
+                Médicos
+            </a>
+
+            <a href="/citas">
+                <span>▣</span>
+                Citas
+            </a>
+
+            <a href="/historias">
+                <span>▤</span>
+                Historias clínicas
+            </a>
+
+            <a href="/enfermeria">
+                <span>♡</span>
+                Enfermería
+            </a>
+
+            <a href="/reportes">
+                <span>▥</span>
+                Reportes
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="user-mini">
+                <div class="avatar">
+                    {{ request.session.get("nombre", "U")[0] }}
+                </div>
+
+                <div>
+                    <strong>
+                        {{ request.session.get("nombre", "Usuario") }}
+                    </strong>
+
+                    <small>
+                        {{ request.session.get("rol", "Usuario") }}
+                    </small>
+                </div>
+            </div>
+
+            <a href="/logout" class="logout">
+                Salir
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <span class="topbar-label">
+                    CONSULTORIO LOS ROSALES
+                </span>
+
+                <h1>
+                    {% block titulo %}{% endblock %}
+                </h1>
+            </div>
+
+            <div class="top-user">
+                <span class="notification">♧</span>
+
+                <div>
+                    <strong>
+                        {{ request.session.get("nombre", "Usuario") }}
+                    </strong>
+
+                    <small>
+                        {{ request.session.get("rol", "") }}
+                    </small>
+                </div>
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            {% block contenido %}
+            {% endblock %}
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

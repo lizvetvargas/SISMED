@@ -1,0 +1,25 @@
+:root {
+
+    --azul: #173B63;
+    --azul-oscuro: #102C4A;
+    --azul-claro: #2D5D8F;
+
+    --rosa: #C94B68;
+    --rosa-claro: #E58A9E;
+    --rojo: #A9364F;
+
+    --beige: #F5EFE6;
+    --beige-oscuro: #E9DDCC;
+
+    --dorado: #C7A45D;
+    --dorado-claro: #E0C98B;
+
+    --blanco: #FFFFFF;
+    --gris: #6B7280;
+    --gris-claro: #E5E7EB;
+
+    --texto: #243447;
+    --sombra: 0 10px 30px rgba(23, 59, 99, 0.10);
+
+    --radio: 14px;
+}

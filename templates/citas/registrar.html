@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Nueva cita
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">
+            AGENDA MÉDICA
+        </span>
+
+        <h2>
+            Registrar cita
+        </h2>
+
+        <p>
+            Programa una nueva atención médica.
+        </p>
+    </div>
+
+</div>
+
+
+<form action="/citas/registrar"
+      method="post"
+      class="form-panel">
+
+    <div class="form-grid">
+
+        <div class="field full">
+
+            <label>Paciente</label>
+
+            <select name="paciente_id"
+                    required>
+
+                <option value="">
+                    Seleccionar paciente
+                </option>
+
+                {% for paciente in pacientes %}
+
+                <option value="{{ paciente.id }}">
+                    {{ paciente.dni }} -
+                    {{ paciente.nombres }}
+                    {{ paciente.apellidos }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="field full">
+
+            <label>Médico</label>
+
+            <select name="medico_id"
+                    required>
+
+                <option value="">
+                    Seleccionar médico
+                </option>
+
+                {% for medico in medicos %}
+
+                <option value="{{ medico.id }}">
+                    Dr(a). {{ medico.nombres }}
+                    {{ medico.apellidos }}
+                    — {{ medico.especialidad }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Fecha</label>
+
+            <input type="date"
+                   name="fecha"
+                   required>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Hora</label>
+
+            <input type="time"
+                   name="hora"
+                   required>
+
+        </div>
+
+
+        <div class="field full">
+
+            <label>Motivo de consulta</label>
+
+            <textarea name="motivo"
+                      rows="4"
+                      placeholder="Ingrese el motivo de la consulta"></textarea>
+
+        </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+        <a href="/citas"
+           class="secondary-button">
+            Cancelar
+        </a>
+
+        <button type="submit"
+                class="primary-button">
+            Registrar cita
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}

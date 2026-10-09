@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Registrar médico
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">
+            PERSONAL MÉDICO
+        </span>
+
+        <h2>
+            Nuevo médico
+        </h2>
+
+        <p>
+            Registra los datos del profesional.
+        </p>
+    </div>
+
+</div>
+
+
+<form action="/medicos/registrar"
+      method="post"
+      class="form-panel">
+
+    <div class="form-grid">
+
+        <div class="field">
+
+            <label>Nombres</label>
+
+            <input type="text"
+                   name="nombres"
+                   required>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Apellidos</label>
+
+            <input type="text"
+                   name="apellidos"
+                   required>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Especialidad</label>
+
+            <input type="text"
+                   name="especialidad"
+                   required>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>CMP</label>
+
+            <input type="text"
+                   name="cmp">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Teléfono</label>
+
+            <input type="text"
+                   name="telefono">
+
+        </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+        <a href="/medicos"
+           class="secondary-button">
+            Cancelar
+        </a>
+
+        <button type="submit"
+                class="primary-button">
+            Guardar médico
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}

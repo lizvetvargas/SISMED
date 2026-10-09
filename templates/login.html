@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#172B46">
+    <title>Acceso | SISMED - Los Rosales</title>
+
+    <!-- Estilos generales -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/style.css') }}"
+    >
+
+    <!-- Estilos exclusivos del login -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/login.css') }}"
+    >
+</head>
+
+<body class="login-page">
+
+    <main class="login-shell">
+
+        <!-- PANEL DE IDENTIDAD -->
+        <section class="login-brand">
+
+            <div class="brand-top">
+                <div class="brand-logo">S<span>+</span></div>
+                <span class="brand-tag">LOS ROSALES</span>
+            </div>
+
+            <div class="brand-content">
+                <span class="brand-overline">
+                    SALUD · CONFIANZA · BIENESTAR
+                </span>
+
+                <h1>SISMED</h1>
+
+                <h2>Tu salud, nuestra prioridad.</h2>
+
+                <p>
+                    Una plataforma para organizar la atención médica
+                    y facilitar la gestión del consultorio.
+                </p>
+
+                <div class="brand-divider"></div>
+
+                <div class="brand-feature">
+                    <span class="feature-icon" aria-hidden="true">✚</span>
+
+                    <div>
+                        <strong>Gestión médica</strong>
+                        <span>
+                            Información organizada en un solo lugar
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="brand-footer">
+                <span class="footer-dot"></span>
+                <span>CONSULTORIO LOS ROSALES</span>
+                <span class="footer-year">SISMED · 1.0</span>
+            </div>
+
+        </section>
+
+        <!-- PANEL DE ACCESO -->
+        <section class="login-content">
+
+            <div class="login-topline">
+                <span class="login-mini-logo">S+</span>
+                <span class="login-top-label">PORTAL DE ACCESO</span>
+            </div>
+
+            <div class="login-heading">
+                <span class="section-label">BIENVENIDO/A</span>
+
+                <h2>Inicia sesión</h2>
+
+                <p>
+                    Ingresa tus credenciales para continuar
+                    al sistema de gestión médica.
+                </p>
+            </div>
+
+            <!-- Mensaje de error del servidor -->
+            {% if error %}
+                <div class="login-error" role="alert">
+                    <span class="error-symbol">!</span>
+                    <span>{{ error }}</span>
+                </div>
+            {% endif %}
+
+            <!-- Formulario de acceso -->
+            <form action="/login" method="post" class="login-form">
+
+                <div class="form-group">
+                    <label for="username">Nombre de usuario</label>
+
+                    <div class="input-shell">
+                        <span class="input-icon" aria-hidden="true">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="8" r="3.5"></circle>
+                                <path d="M5 20c0-3.8 2.8-6 7-6s7 2.2 7 6"></path>
+                            </svg>
+                        </span>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Escribe tu usuario"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+
+                    <div class="input-shell">
+                        <span class="input-icon" aria-hidden="true">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                                <path d="M12 14v3"></path>
+                            </svg>
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Escribe tu contraseña"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="login-button">
+                    <span>Ingresar al sistema</span>
+                    <span class="button-arrow" aria-hidden="true">→</span>
+                </button>
+
+            </form>
+
+            <div class="login-security">
+                <span class="security-icon" aria-hidden="true">◇</span>
+                <span>Acceso destinado al personal autorizado</span>
+            </div>
+
+            <footer class="login-footer">
+                <span>© SISMED · Sistema de Gestión Médica</span>
+                <span>Consultorio Los Rosales</span>
+            </footer>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

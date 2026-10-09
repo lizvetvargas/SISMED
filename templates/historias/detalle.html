@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Historia clínica
+{% endblock %}
+
+{% block contenido %}
+
+{% if paciente %}
+
+<div class="page-header">
+
+    <div>
+
+        <span class="section-label">
+            HISTORIA CLÍNICA
+        </span>
+
+        <h2>
+            {{ paciente.nombres }}
+            {{ paciente.apellidos }}
+        </h2>
+
+        <p>
+            DNI: {{ paciente.dni }}
+        </p>
+
+    </div>
+
+</div>
+
+
+<form action="/historias/guardar"
+      method="post"
+      class="form-panel">
+
+    <input type="hidden"
+           name="paciente_id"
+           value="{{ paciente.id }}">
+
+
+    <div class="field full">
+
+        <label>Antecedentes</label>
+
+        <textarea name="antecedentes"
+                  rows="5">{{ historia.antecedentes if historia else "" }}</textarea>
+
+    </div>
+
+
+    <div class="field full">
+
+        <label>Diagnósticos</label>
+
+        <textarea name="diagnosticos"
+                  rows="5">{{ historia.diagnosticos if historia else "" }}</textarea>
+
+    </div>
+
+
+    <div class="field full">
+
+        <label>Tratamientos</label>
+
+        <textarea name="tratamientos"
+                  rows="5">{{ historia.tratamientos if historia else "" }}</textarea>
+
+    </div>
+
+
+    <div class="field full">
+
+        <label>Observaciones</label>
+
+        <textarea name="observaciones"
+                  rows="5">{{ historia.observaciones if historia else "" }}</textarea>
+
+    </div>
+
+
+    <div class="form-actions">
+
+        <a href="/historias"
+           class="secondary-button">
+            Cancelar
+        </a>
+
+        <button type="submit"
+                class="primary-button">
+            Guardar historia
+        </button>
+
+    </div>
+
+</form>
+
+{% else %}
+
+<div class="empty">
+    Paciente no encontrado.
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Panel principal
+{% endblock %}
+
+{% block contenido %}
+
+<div class="welcome">
+
+    <div>
+        <span class="section-label">RESUMEN GENERAL</span>
+
+        <h2>
+            Buenos días, {{ nombre }}
+        </h2>
+
+        <p>
+            Este es el resumen de actividad de SISMED.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat-card blue">
+
+        <span class="stat-icon">♙</span>
+
+        <div>
+            <span>Pacientes registrados</span>
+            <strong>{{ pacientes }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card pink">
+
+        <span class="stat-icon">✚</span>
+
+        <div>
+            <span>Médicos</span>
+            <strong>{{ medicos }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card gold">
+
+        <span class="stat-icon">▣</span>
+
+        <div>
+            <span>Citas registradas</span>
+            <strong>{{ citas }}</strong>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <div>
+                <span class="section-label">
+                    ACTIVIDAD
+                </span>
+
+                <h3>
+                    Citas recientes
+                </h3>
+            </div>
+
+            <a href="/citas">
+                Ver todas
+            </a>
+
+        </div>
+
+
+        <div class="appointment-list">
+
+            {% for cita in citas_recientes %}
+
+            <div class="appointment">
+
+                <div class="appointment-time">
+                    {{ cita.hora }}
+                </div>
+
+                <div class="appointment-info">
+
+                    <strong>
+                        Cita médica
+                    </strong>
+
+                    <span>
+                        {{ cita.motivo or "Consulta general" }}
+                    </span>
+
+                </div>
+
+                <span class="status {{ cita.estado|lower }}">
+                    {{ cita.estado }}
+                </span>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty">
+                No hay citas registradas.
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <div class="panel quick-panel">
+
+        <span class="section-label">
+            ACCESOS
+        </span>
+
+        <h3>
+            Acciones rápidas
+        </h3>
+
+        <a href="/pacientes/registrar"
+           class="quick-button">
+            + Registrar paciente
+        </a>
+
+        <a href="/medicos/registrar"
+           class="quick-button">
+            + Registrar médico
+        </a>
+
+        <a href="/citas/registrar"
+           class="quick-button">
+            + Registrar cita
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

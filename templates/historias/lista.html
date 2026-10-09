@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Historias clínicas
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">
+            INFORMACIÓN MÉDICA
+        </span>
+
+        <h2>
+            Historias clínicas
+        </h2>
+
+        <p>
+            Selecciona un paciente para consultar su historia.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="cards-grid">
+
+{% for paciente in pacientes %}
+
+<div class="patient-history-card">
+
+    <div class="doctor-avatar">
+        {{ paciente.nombres[0] }}
+    </div>
+
+    <h3>
+        {{ paciente.nombres }}
+        {{ paciente.apellidos }}
+    </h3>
+
+    <span>
+        DNI: {{ paciente.dni }}
+    </span>
+
+    <a href="/historias/{{ paciente.id }}"
+       class="table-action">
+        Abrir historia
+    </a>
+
+</div>
+
+{% else %}
+
+<div class="empty">
+    No existen pacientes registrados.
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

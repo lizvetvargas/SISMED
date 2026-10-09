@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Registrar paciente
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">
+            PACIENTES
+        </span>
+
+        <h2>
+            Nuevo paciente
+        </h2>
+
+        <p>
+            Registra los datos personales del paciente.
+        </p>
+    </div>
+
+</div>
+
+
+<form action="/pacientes/registrar"
+      method="post"
+      class="form-panel">
+
+    <div class="form-section">
+
+        <h3>
+            Información personal
+        </h3>
+
+        <div class="form-grid">
+
+            <div class="field">
+
+                <label>DNI</label>
+
+                <input type="text"
+                       name="dni"
+                       maxlength="8"
+                       required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Nombres</label>
+
+                <input type="text"
+                       name="nombres"
+                       required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Apellidos</label>
+
+                <input type="text"
+                       name="apellidos"
+                       required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Fecha de nacimiento</label>
+
+                <input type="date"
+                       name="fecha_nacimiento">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Teléfono</label>
+
+                <input type="text"
+                       name="telefono">
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>Dirección</label>
+
+                <input type="text"
+                       name="direccion">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+        <a href="/pacientes"
+           class="secondary-button">
+            Cancelar
+        </a>
+
+        <button type="submit"
+                class="primary-button">
+            Guardar paciente
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}

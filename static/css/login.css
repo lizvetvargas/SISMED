@@ -1,0 +1,648 @@
+
+/* =====================================================
+   SISMED - LOGIN
+   Consultorio Los Rosales
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --login-azul-oscuro: var(--azul-oscuro, #172B46);
+    --login-azul: var(--azul, #294766);
+    --login-beige: #F5F0E6;
+    --login-dorado: var(--dorado, #C6A45B);
+    --login-rosa: var(--rosa, #D98C9B);
+    --login-texto: #29384A;
+    --login-gris: #7A8592;
+    --login-borde: #E5E8ED;
+    --login-blanco: #FFFFFF;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--login-texto);
+    -webkit-font-smoothing: antialiased;
+}
+
+.login-page {
+    min-height: 100vh;
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(
+            circle at 12% 12%,
+            rgba(217, 140, 155, 0.14),
+            transparent 28%
+        ),
+        linear-gradient(135deg, #172B46, #263F5C 60%, #344D68);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Elementos decorativos del fondo */
+
+.login-page::before,
+.login-page::after {
+    content: "";
+    position: fixed;
+    border: 1px solid rgba(224, 201, 139, 0.20);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.login-page::before {
+    width: 430px;
+    height: 430px;
+    top: -230px;
+    right: -100px;
+}
+
+.login-page::after {
+    width: 330px;
+    height: 330px;
+    bottom: -210px;
+    left: -110px;
+}
+
+/* Contenedor principal */
+
+.login-shell {
+    width: 100%;
+    max-width: 1080px;
+    min-height: 640px;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    background: var(--login-blanco);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* =====================================================
+   PANEL IZQUIERDO: IDENTIDAD SISMED
+   ===================================================== */
+
+.login-brand {
+    padding: 42px 44px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--login-blanco);
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(23, 43, 70, 0.97),
+            rgba(39, 66, 96, 0.98)
+        );
+}
+
+.login-brand::before {
+    content: "";
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border: 1px solid rgba(224, 201, 139, 0.20);
+    border-radius: 50%;
+    right: -230px;
+    top: 125px;
+}
+
+.login-brand::after {
+    content: "+";
+    position: absolute;
+    right: 34px;
+    bottom: 72px;
+    color: rgba(255, 255, 255, 0.045);
+    font-size: 260px;
+    font-weight: 300;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.brand-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.brand-logo {
+    width: 54px;
+    height: 54px;
+    border: 1px solid var(--login-dorado);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--login-blanco);
+    font-size: 29px;
+    font-weight: 700;
+    letter-spacing: -2px;
+}
+
+.brand-logo span {
+    color: var(--login-dorado);
+}
+
+.brand-tag {
+    color: #E7D5A8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 1;
+    margin: 55px 0;
+}
+
+.brand-overline {
+    display: block;
+    color: #D8C18B;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.brand-content h1 {
+    font-size: clamp(54px, 6vw, 76px);
+    font-weight: 700;
+    letter-spacing: 5px;
+    line-height: 1.1;
+    color: #FFFFFF;
+}
+
+.brand-content h2 {
+    max-width: 340px;
+    margin-top: 17px;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #F0E7D6;
+}
+
+.brand-content > p {
+    max-width: 340px;
+    margin-top: 17px;
+    color: #C6D0DC;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.brand-divider {
+    width: 54px;
+    height: 2px;
+    margin: 30px 0 25px;
+    background: var(--login-dorado);
+}
+
+.brand-feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.feature-icon {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(224, 201, 139, 0.45);
+    color: var(--login-dorado);
+    font-size: 22px;
+}
+
+.brand-feature strong,
+.brand-feature div > span {
+    display: block;
+}
+
+.brand-feature strong {
+    margin-bottom: 6px;
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+.brand-feature div > span {
+    color: #C6D0DC;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.brand-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+    color: #D1D9E2;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--login-dorado);
+    border-radius: 50%;
+}
+
+.footer-year {
+    margin-left: auto;
+    color: #D8C18B;
+    font-size: 9px;
+}
+
+/* =====================================================
+   PANEL DERECHO: FORMULARIO
+   ===================================================== */
+
+.login-content {
+    padding: 42px 58px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FFFFFF;
+}
+
+.login-topline {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 54px;
+}
+
+.login-mini-logo {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--login-dorado);
+    color: var(--login-azul);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.login-top-label {
+    color: #8A929C;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.login-heading {
+    margin-bottom: 30px;
+}
+
+.section-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #B18D45;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.login-heading h2 {
+    color: var(--login-azul-oscuro);
+    font-size: 31px;
+    font-weight: 650;
+    letter-spacing: -0.8px;
+    line-height: 1.3;
+}
+
+.login-heading p {
+    max-width: 350px;
+    margin-top: 12px;
+    color: var(--login-gris);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* Mensaje de error */
+
+.login-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding: 13px 14px;
+    border-left: 3px solid #C75E70;
+    background: #FFF0F2;
+    color: #A43E50;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.error-symbol {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Formulario */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    color: #34465B;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.input-shell {
+    min-height: 51px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--login-borde);
+    background: #FFFFFF;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-shell:focus-within {
+    border-color: var(--login-dorado);
+    box-shadow: 0 0 0 3px rgba(198, 164, 91, 0.12);
+}
+
+.input-icon {
+    width: 48px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    color: #9C8B68;
+}
+
+.input-icon svg {
+    width: 19px;
+    height: 19px;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.input-shell input {
+    width: 100%;
+    min-width: 0;
+    min-height: 49px;
+    padding: 12px 14px 12px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--login-texto);
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.input-shell input::placeholder {
+    color: #A7AFB9;
+}
+
+.input-shell input:focus-visible {
+    outline: none;
+}
+
+/* Botón de acceso */
+
+.login-button {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 6px;
+    padding: 0 19px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid var(--login-azul-oscuro);
+    background: var(--login-azul-oscuro);
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.login-button:hover {
+    border-color: #A8894B;
+    background: #263F5C;
+}
+
+.login-button:focus-visible {
+    outline: 3px solid rgba(198, 164, 91, 0.45);
+    outline-offset: 3px;
+}
+
+.button-arrow {
+    color: #E4CA8B;
+    font-size: 21px;
+    font-weight: 400;
+    transition: transform 0.2s ease;
+}
+
+.login-button:hover .button-arrow {
+    transform: translateX(4px);
+}
+
+/* Aviso de seguridad */
+
+.login-security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 25px;
+    color: #7D8792;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.security-icon {
+    color: #B18D45;
+    font-size: 17px;
+}
+
+/* Pie de página */
+
+.login-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 33px;
+    padding-top: 20px;
+    border-top: 1px solid #EDF0F3;
+    color: #929AA4;
+    font-size: 9px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   ADAPTACIÓN A TABLET Y MÓVIL
+   ===================================================== */
+
+@media (max-width: 850px) {
+    .login-page {
+        padding: 22px;
+    }
+
+    .login-shell {
+        max-width: 620px;
+        grid-template-columns: 1fr;
+    }
+
+    .login-brand {
+        min-height: 300px;
+        padding: 28px 32px;
+    }
+
+    .brand-content {
+        margin: 35px 0;
+    }
+
+    .brand-content h1 {
+        font-size: 52px;
+    }
+
+    .brand-content h2 {
+        font-size: 19px;
+    }
+
+    .brand-content > p {
+        max-width: 420px;
+    }
+
+    .brand-divider {
+        margin: 20px 0;
+    }
+
+    .brand-footer {
+        padding-top: 16px;
+    }
+
+    .login-content {
+        padding: 35px 40px;
+    }
+
+    .login-topline {
+        margin-bottom: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .login-shell {
+        min-height: auto;
+        margin: auto 0;
+    }
+
+    .login-brand {
+        min-height: auto;
+        padding: 24px;
+    }
+
+    .brand-logo {
+        width: 45px;
+        height: 45px;
+        font-size: 25px;
+    }
+
+    .brand-content {
+        margin: 32px 0;
+    }
+
+    .brand-content h1 {
+        font-size: 43px;
+    }
+
+    .brand-content h2 {
+        font-size: 18px;
+    }
+
+    .brand-content > p {
+        font-size: 12px;
+    }
+
+    .brand-overline {
+        font-size: 8px;
+        letter-spacing: 1.4px;
+    }
+
+    .brand-footer {
+        font-size: 8px;
+    }
+
+    .footer-year {
+        width: 100%;
+        margin-left: 16px;
+    }
+
+    .login-content {
+        padding: 28px 24px;
+    }
+
+    .login-topline {
+        margin-bottom: 30px;
+    }
+
+    .login-heading h2 {
+        font-size: 27px;
+    }
+
+    .login-heading p {
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

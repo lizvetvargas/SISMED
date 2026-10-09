@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Médicos
+{% endblock %}
+
+{% block contenido %}
+
+<div class="page-header">
+
+    <div>
+        <span class="section-label">
+            PERSONAL MÉDICO
+        </span>
+
+        <h2>
+            Médicos
+        </h2>
+
+        <p>
+            Administra los profesionales del consultorio.
+        </p>
+    </div>
+
+    <a href="/medicos/registrar"
+       class="primary-button">
+        + Nuevo médico
+    </a>
+
+</div>
+
+
+<div class="cards-grid">
+
+{% for medico in medicos %}
+
+<div class="doctor-card">
+
+    <div class="doctor-avatar">
+        {{ medico.nombres[0] }}
+    </div>
+
+    <h3>
+        Dr(a). {{ medico.nombres }}
+        {{ medico.apellidos }}
+    </h3>
+
+    <span>
+        {{ medico.especialidad }}
+    </span>
+
+    <div class="doctor-data">
+        CMP: {{ medico.cmp or "—" }}
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="empty">
+    No hay médicos registrados.
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
