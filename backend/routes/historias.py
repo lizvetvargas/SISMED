@@ -1,3 +1,6 @@
+
+from pathlib import Path
+
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -6,61 +9,84 @@ from ..database import SessionLocal
 from ..models import Paciente, HistoriaClinica
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+templates = Jinja2Templates(
+    directory=str(BASE_DIR / "templates")
+)
+
+
+def usuario_autenticado(request: Request) -> bool:
+    return bool(request.session.get("usuario"))
 
 
 @router.get("/historias")
 def lista_historias(request: Request):
-
-    if not request.session.get("usuario"):
+    if not usuario_autenticado(request):
         return RedirectResponse("/", status_code=303)
 
     db = SessionLocal()
 
-    pacientes = db.query(Paciente).all()
-    historias = db.query(HistoriaClinica).all()
+    try:
+        pacientes = (
+            db.query(Paciente)
+            .order_by(Paciente.apellidos, Paciente.nombres)
+            .all()
+        )
 
-    db.close()
+        historias = db.query(HistoriaClinica).all()
 
-    return templates.TemplateResponse(
-        "historias/lista.html",
-        {
-            "request": request,
-            "pacientes": pacientes,
-            "historias": historias
+        historias_por_paciente = {
+            historia.paciente_id: historia
+            for historia in historias
         }
-    )
+
+        return templates.TemplateResponse(
+            request=request,
+            name="historias/lista.html",
+            context={
+                "pacientes": pacientes,
+                "historias": historias,
+                "historias_por_paciente": historias_por_paciente,
+            },
+        )
+    finally:
+        db.close()
 
 
 @router.get("/historias/{paciente_id}")
-def detalle_historia(
-    request: Request,
-    paciente_id: int
-):
-
-    if not request.session.get("usuario"):
+def detalle_historia(request: Request, paciente_id: int):
+    if not usuario_autenticado(request):
         return RedirectResponse("/", status_code=303)
 
     db = SessionLocal()
 
-    paciente = db.query(Paciente).filter(
-        Paciente.id == paciente_id
-    ).first()
+    try:
+        paciente = (
+            db.query(Paciente)
+            .filter(Paciente.id == paciente_id)
+            .first()
+        )
 
-    historia = db.query(HistoriaClinica).filter(
-        HistoriaClinica.paciente_id == paciente_id
-    ).first()
+        if not paciente:
+            return RedirectResponse("/historias", status_code=303)
 
-    db.close()
+        historia = (
+            db.query(HistoriaClinica)
+            .filter(HistoriaClinica.paciente_id == paciente_id)
+            .first()
+        )
 
-    return templates.TemplateResponse(
-        "historias/detalle.html",
-        {
-            "request": request,
-            "paciente": paciente,
-            "historia": historia
-        }
-    )
+        return templates.TemplateResponse(
+            request=request,
+            name="historias/detalle.html",
+            context={
+                "paciente": paciente,
+                "historia": historia,
+            },
+        )
+    finally:
+        db.close()
 
 
 @router.post("/historias/guardar")
@@ -68,38 +94,56 @@ def guardar_historia(
     request: Request,
     paciente_id: int = Form(...),
     antecedentes: str = Form(""),
-    diagnosticos: str = Form(""),
-    tratamientos: str = Form(""),
-    observaciones: str = Form("")
+    diagnostico: str = Form(""),
+    tratamiento: str = Form(""),
+    observaciones: str = Form(""),
 ):
+    if not usuario_autenticado(request):
+        return RedirectResponse("/", status_code=303)
 
     db = SessionLocal()
 
-    historia = db.query(HistoriaClinica).filter(
-        HistoriaClinica.paciente_id == paciente_id
-    ).first()
-
-    if historia:
-        historia.antecedentes = antecedentes
-        historia.diagnosticos = diagnosticos
-        historia.tratamientos = tratamientos
-        historia.observaciones = observaciones
-
-    else:
-        historia = HistoriaClinica(
-            paciente_id=paciente_id,
-            antecedentes=antecedentes,
-            diagnosticos=diagnosticos,
-            tratamientos=tratamientos,
-            observaciones=observaciones
+    try:
+        paciente = (
+            db.query(Paciente)
+            .filter(Paciente.id == paciente_id)
+            .first()
         )
 
-        db.add(historia)
+        if not paciente:
+            return RedirectResponse("/historias", status_code=303)
 
-    db.commit()
-    db.close()
+        historia = (
+            db.query(HistoriaClinica)
+            .filter(HistoriaClinica.paciente_id == paciente_id)
+            .first()
+        )
 
-    return RedirectResponse(
-        f"/historias/{paciente_id}",
-        status_code=303
-    )
+        if historia:
+            historia.antecedentes = antecedentes.strip() or None
+            historia.diagnostico = diagnostico.strip() or None
+            historia.tratamiento = tratamiento.strip() or None
+            historia.observaciones = observaciones.strip() or None
+        else:
+            historia = HistoriaClinica(
+                paciente_id=paciente_id,
+                antecedentes=antecedentes.strip() or None,
+                diagnostico=diagnostico.strip() or None,
+                tratamiento=tratamiento.strip() or None,
+                observaciones=observaciones.strip() or None,
+            )
+            db.add(historia)
+
+        db.commit()
+
+        return RedirectResponse(
+            f"/historias/{paciente_id}",
+            status_code=303,
+        )
+
+    except Exception:
+        db.rollback()
+        raise
+
+    finally:
+        db.close()
