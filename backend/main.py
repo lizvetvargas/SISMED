@@ -19,7 +19,14 @@ from .models import (
     Cita,
     HistoriaClinica,
 )
-from .routes import pacientes, medicos, citas, historias, enfermeria
+from .routes import (
+    pacientes,
+    medicos,
+    citas,
+    historias,
+    enfermeria,
+    reportes,
+)
 
 
 # =========================================================
@@ -48,7 +55,7 @@ if not SECRET_KEY:
 
 
 def crear_hash(password: str) -> str:
-    """Genera un hash de contraseña con PBKDF2."""
+    """Genera un hash seguro de contraseña con PBKDF2."""
     salt = secrets.token_hex(16)
 
     resultado = hashlib.pbkdf2_hmac(
@@ -85,7 +92,6 @@ def verificar_password(password: str, almacenada: str) -> bool:
         except (ValueError, TypeError):
             return False
 
-    # Compatibilidad con contraseñas anteriores.
     return hmac.compare_digest(password, almacenada)
 
 
@@ -125,6 +131,7 @@ app.include_router(medicos.router)
 app.include_router(citas.router)
 app.include_router(historias.router)
 app.include_router(enfermeria.router)
+app.include_router(reportes.router)
 
 
 # =========================================================
@@ -224,7 +231,6 @@ def iniciar_sesion(
                 status_code=401,
             )
 
-        # Actualiza contraseñas antiguas al iniciar sesión.
         if not usuario.password.startswith("pbkdf2_sha256$"):
             usuario.password = crear_hash(password)
             db.commit()
