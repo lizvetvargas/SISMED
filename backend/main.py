@@ -19,6 +19,7 @@ from .models import (
     Cita,
     HistoriaClinica,
 )
+from .routes import pacientes
 
 
 # =========================================================
@@ -61,7 +62,7 @@ def crear_hash(password: str) -> str:
 
 
 def verificar_password(password: str, almacenada: str) -> bool:
-    """Verifica contraseñas nuevas y contraseñas antiguas de texto."""
+    """Verifica contraseñas protegidas y antiguas."""
     if not almacenada:
         return False
 
@@ -84,8 +85,7 @@ def verificar_password(password: str, almacenada: str) -> bool:
         except (ValueError, TypeError):
             return False
 
-    # Compatibilidad temporal con usuarios creados anteriormente.
-    # El hash se actualizará cuando inicien sesión correctamente.
+    # Compatibilidad temporal con contraseñas anteriores.
     return hmac.compare_digest(password, almacenada)
 
 
@@ -102,7 +102,7 @@ app = FastAPI(
 app.add_middleware(
     SessionMiddleware,
     secret_key=SECRET_KEY,
-    https_only=False,  # Cambiar a True cuando se use HTTPS en producción.
+    https_only=False,
     same_site="lax",
     max_age=3600,
 )
@@ -117,18 +117,26 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
 
 # =========================================================
-# 4. CREACIÓN DE TABLAS
+# 4. REGISTRO DE MÓDULOS
+# =========================================================
+
+# Activa las rutas del módulo de pacientes.
+app.include_router(pacientes.router)
+
+
+# =========================================================
+# 5. CREACIÓN DE TABLAS
 # =========================================================
 
 Base.metadata.create_all(bind=engine)
 
 
 # =========================================================
-# 5. USUARIO DE DEMOSTRACIÓN
+# 6. USUARIO DE DEMOSTRACIÓN
 # =========================================================
 
 def crear_usuario_demo():
-    """Crea el administrador de demostración si no existe."""
+    """Crea el administrador si todavía no existe."""
     db = SessionLocal()
 
     try:
@@ -161,7 +169,7 @@ crear_usuario_demo()
 
 
 # =========================================================
-# 6. PÁGINA DE INICIO
+# 7. PÁGINA DE INICIO
 # =========================================================
 
 @app.get("/")
@@ -181,7 +189,7 @@ def inicio(request: Request):
 
 
 # =========================================================
-# 7. INICIO DE SESIÓN
+# 8. INICIO DE SESIÓN
 # =========================================================
 
 @app.post("/login")
@@ -213,8 +221,7 @@ def iniciar_sesion(
                 status_code=401,
             )
 
-        # Actualiza contraseñas antiguas en texto plano
-        # cuando el usuario inicia sesión correctamente.
+        # Actualiza contraseñas antiguas al iniciar sesión.
         if not usuario.password.startswith("pbkdf2_sha256$"):
             usuario.password = crear_hash(password)
             db.commit()
@@ -238,7 +245,7 @@ def iniciar_sesion(
 
 
 # =========================================================
-# 8. PANEL PRINCIPAL
+# 9. PANEL PRINCIPAL
 # =========================================================
 
 @app.get("/dashboard")
@@ -280,7 +287,7 @@ def dashboard(request: Request):
 
 
 # =========================================================
-# 9. CIERRE DE SESIÓN
+# 10. CIERRE DE SESIÓN
 # =========================================================
 
 @app.get("/logout")
@@ -295,7 +302,7 @@ def cerrar_sesion(request: Request):
 
 
 # =========================================================
-# 10. COMPROBACIÓN DEL SISTEMA
+# 11. COMPROBACIÓN DEL SISTEMA
 # =========================================================
 
 @app.get("/estado")
